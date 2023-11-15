@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace _5DanaUOblacima.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/stats/player")]
     [ApiController]
     public class PlayerController : ControllerBase
     {
@@ -20,10 +20,10 @@ namespace _5DanaUOblacima.Controllers
             var players = _playerService.GetAllPlayers();
             return Ok(players);
         }
-        [HttpGet("{name}")]
-        public ActionResult<Player> GetSinglePlayer(string name)
+        [HttpGet("{playerFullName}")]
+        public ActionResult<Player> GetSinglePlayer(string playerFullName)
         {
-            var player = _playerService.GetSinglePlayer(name);
+            var player = _playerService.GetSinglePlayer(playerFullName);
             if (player == null)
             {
                 return NotFound("Player not found");

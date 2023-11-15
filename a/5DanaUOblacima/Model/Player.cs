@@ -1,7 +1,12 @@
-﻿namespace _5DanaUOblacima.Model
+﻿using System.Formats.Asn1;
+using System.Globalization;
+using Newtonsoft.Json;
+
+namespace _5DanaUOblacima.Model
 {
     public class Player
     {
+        [JsonConverter(typeof(CustomDoubleConverter))]
         public string PlayerName { get; set; }
         public string? Position { get; set; }
         public int GamesPlayed { get; set; }
@@ -13,6 +18,7 @@
         public double Steals { get; set; }
         public double Turnovers { get; set; }
         public Advanced? Advanced { get; set; }
+
         public Player(string playerName, string position, int gamesPlayed, Traditional traditional, double points, double rebounds, double blocks, double assists, double steals, double turnovers, Advanced advanced)
         {
             this.PlayerName = playerName;
@@ -51,8 +57,27 @@
             this.Assists = (this.Assists * (this.GamesPlayed - 1) + AST) / this.GamesPlayed;
             this.Steals = (this.Steals * (this.GamesPlayed - 1) + STL) / this.GamesPlayed;
             this.Turnovers = (this.Turnovers * (this.GamesPlayed - 1) + TOV) / this.GamesPlayed;
-            Advanced.SetAdvanced(FTM, FTA, M2P, A2P, M3P, A3P, REB, BLK, AST, STL, TOV, this.GamesPlayed);
+            Advanced.SetAdvanced(Convert.ToDouble(FTM) , Convert.ToDouble(FTA), Convert.ToDouble(M2P), Convert.ToDouble(A2P), Convert.ToDouble(M3P), Convert.ToDouble(A3P), Convert.ToDouble(REB), Convert.ToDouble(BLK), Convert.ToDouble(AST), Convert.ToDouble(STL), Convert.ToDouble(TOV), this.GamesPlayed);
             //TODO fix setAdvanced
+        }
+    }
+    public class CustomDoubleConverter : JsonConverter
+    {
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            double doubleValue = (double)value;
+            string formattedValue = doubleValue.ToString("F1", CultureInfo.InvariantCulture);
+            writer.WriteValue(formattedValue);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(double);
         }
     }
 }

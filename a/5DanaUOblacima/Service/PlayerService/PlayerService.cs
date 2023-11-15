@@ -63,7 +63,8 @@ namespace _5DanaUOblacima.Service.PlayerService
 
         public Player? GetSinglePlayer(string name)
         {
-            return playersMap[name];
+            if (playersMap.ContainsKey(name)) return playersMap[name];
+            return null;
         }
     }
 }

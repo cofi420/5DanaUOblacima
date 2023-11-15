@@ -36,6 +36,7 @@
         }
         public void SetAdvanced(double FTM, double FTA, double M2P, double A2P, double M3P, double A3P, double REB, double BLK, double AST, double STL, double TOV, double gamesPlayed)
         {
+            
             this.valorization = (this.valorization * (gamesPlayed - 1) + (FTM + 2 * M2P + 3 * M3P + REB + BLK + AST + STL) - (FTA - FTM + A2P - M2P + A3P - M3P + TOV)) / gamesPlayed;
                 
             if (A2P + A3P != 0)
