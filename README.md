@@ -11,8 +11,13 @@ This app reads data from CSV file, calculates stats by formulas and provides a G
 ## Instalation
 
 Clone the repository: git clone https://github.com/cofi420/5DanaUOblacima.git
+
 Navigate to the project directory: cd your-repository
+
 Navigate to root directory: cd a/5DanaUOblacima
+
 Build the project: dotnet build
+
 Run the application: dotnet run
+
 The application will be accessible at http://localhost:5168
