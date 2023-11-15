@@ -15,13 +15,13 @@ namespace _5DanaUOblacima.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<List<Player>>> GetAllPlayers()
+        public ActionResult<List<Player>> GetAllPlayers()
         {
             var players = _playerService.GetAllPlayers();
             return Ok(players);
         }
         [HttpGet("{name}")]
-        public async Task<ActionResult<Player>> GetSinglePlayer(string name)
+        public ActionResult<Player> GetSinglePlayer(string name)
         {
             var player = _playerService.GetSinglePlayer(name);
             if (player == null)
