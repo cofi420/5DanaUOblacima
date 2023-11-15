@@ -51,7 +51,7 @@
             this.Assists = (this.Assists * (this.GamesPlayed - 1) + AST) / this.GamesPlayed;
             this.Steals = (this.Steals * (this.GamesPlayed - 1) + STL) / this.GamesPlayed;
             this.Turnovers = (this.Turnovers * (this.GamesPlayed - 1) + TOV) / this.GamesPlayed;
-            Advanced.SetAdvanced(FTM, FTA, M2P, A2P, M3P, A3P, REB, BLK, AST, STL, TOV, GamesPlayed);
+            Advanced.SetAdvanced(FTM, FTA, M2P, A2P, M3P, A3P, REB, BLK, AST, STL, TOV, this.GamesPlayed);
             //TODO fix setAdvanced
         }
     }
