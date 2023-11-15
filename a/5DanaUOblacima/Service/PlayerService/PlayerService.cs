@@ -54,6 +54,10 @@ namespace _5DanaUOblacima.Service.PlayerService
                         playersMap.Add(fields[0], player);
                     }
                 }
+                foreach (Player player in playersMap.Values)
+                {
+                    player.Advanced.CalculateAverage(player.GamesPlayed);
+                }
             }
         }
         public List<Player> GetAllPlayers()

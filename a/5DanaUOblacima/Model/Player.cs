@@ -1,12 +1,8 @@
-﻿using System.Formats.Asn1;
-using System.Globalization;
-using Newtonsoft.Json;
-
+﻿
 namespace _5DanaUOblacima.Model
 {
     public class Player
     {
-        [JsonConverter(typeof(CustomDoubleConverter))]
         public string PlayerName { get; set; }
         public string? Position { get; set; }
         public int GamesPlayed { get; set; }
@@ -51,33 +47,14 @@ namespace _5DanaUOblacima.Model
         {
             this.GamesPlayed++;
             Traditional.SetTraditional(FTM, FTA, M2P, A2P, M3P, A3P, GamesPlayed);
-            this.Points = (this.Points * (this.GamesPlayed - 1) + (FTM + 2 * M2P + 3 * M3P)) / this.GamesPlayed;
-            this.Rebounds = (this.Rebounds * (this.GamesPlayed - 1) + REB) / this.GamesPlayed;
-            this.Blocks = (this.Blocks * (this.GamesPlayed - 1) + BLK) / this.GamesPlayed;
-            this.Assists = (this.Assists * (this.GamesPlayed - 1) + AST) / this.GamesPlayed;
-            this.Steals = (this.Steals * (this.GamesPlayed - 1) + STL) / this.GamesPlayed;
-            this.Turnovers = (this.Turnovers * (this.GamesPlayed - 1) + TOV) / this.GamesPlayed;
-            Advanced.SetAdvanced(Convert.ToDouble(FTM) , Convert.ToDouble(FTA), Convert.ToDouble(M2P), Convert.ToDouble(A2P), Convert.ToDouble(M3P), Convert.ToDouble(A3P), Convert.ToDouble(REB), Convert.ToDouble(BLK), Convert.ToDouble(AST), Convert.ToDouble(STL), Convert.ToDouble(TOV), this.GamesPlayed);
-            //TODO fix setAdvanced
+            this.Points = Math.Round((this.Points * (this.GamesPlayed - 1) + (FTM + 2 * M2P + 3 * M3P)) / this.GamesPlayed, 1);
+            this.Rebounds = Math.Round((this.Rebounds * (this.GamesPlayed - 1) + REB) / this.GamesPlayed, 1);
+            this.Blocks = Math.Round((this.Blocks * (this.GamesPlayed - 1) + BLK) / this.GamesPlayed, 1);
+            this.Assists = Math.Round((this.Assists * (this.GamesPlayed - 1) + AST) / this.GamesPlayed, 1);
+            this.Steals = Math.Round((this.Steals * (this.GamesPlayed - 1) + STL) / this.GamesPlayed, 1);
+            this.Turnovers = Math.Round((this.Turnovers * (this.GamesPlayed - 1) + TOV) / this.GamesPlayed, 1);
+            Advanced.SetAdvanced(FTM , FTA, M2P, A2P, M3P, A3P, REB, BLK, AST, STL, TOV);
         }
     }
-    public class CustomDoubleConverter : JsonConverter
-    {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            double doubleValue = (double)value;
-            string formattedValue = doubleValue.ToString("F1", CultureInfo.InvariantCulture);
-            writer.WriteValue(formattedValue);
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(double);
-        }
-    }
+    
 }
